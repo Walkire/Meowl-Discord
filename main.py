@@ -34,8 +34,8 @@ async def on_message(message):
                     break
 
             if (foundRole):
-                if (foundRole.name in message.author.roles):
-                    response += str(message.author.name) + ": You are already subscriped to " + str(foundRole.name)
+                if (foundRole in message.author.roles):
+                    response += str(message.author.name) + ": You are already subscribed to " + str(foundRole.name)
                 else:
                     await message.author.add_roles(foundRole)
                     response += str(message.author.name) + ": You have been subscribed to " + str(foundRole.name)
@@ -47,7 +47,7 @@ async def on_message(message):
         foundRole = None
         
         if (len(splitMsg) > 1):
-            requestedRole = message.content.split(' ', 1)[0]
+            requestedRole = message.content.split(' ', 1)[1]
             for role in message.guild.roles:
                 if (requestedRole.lower() == role.name.lower() and role.permissions.value == 0 and role.mentionable and not role.is_default()):
                     foundRole = role
