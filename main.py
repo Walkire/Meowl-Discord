@@ -1,6 +1,7 @@
 # Work with Python 3.6
 import discord
 import os
+from common.enums import Command_Type 
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -9,47 +10,21 @@ client = discord.Client()
 @client.event
 async def on_message(message):
     response = ""
-    command = message.content.split(' ')[0].lower()
-    
+    requestedCommand = message.content.split(' ')[0].lower()
     # we do not want the bot to reply to itself or other bots
     if message.author.bot:
         return
 
-    if command == '?sub':
+    if requestedCommand == Command_Type.sub.value:
+
+    if requestedCommand == Command_Type.unsub.value:
         splitMsg = message.content.split()
-
-        if (len(splitMsg) == 1):
-            response += str(message.author.name) + ": The available subscriptions are — "
-            for role in message.guild.roles:
-                if (role.permissions.value == 0 and role.mentionable and not role.is_default()):
-                    response += role.name + ", "
-
-        if (len(splitMsg) > 1):
-            requestedRole = message.content.split(' ', 1)[1]
-            foundRole = None
-
-            for role in message.guild.roles:
-                if (requestedRole.lower() == role.name.lower() and role.permissions.value == 0 and role.mentionable and not role.is_default()):
-                    foundRole = role
-                    break
-
-            if (foundRole):
-                if (foundRole in message.author.roles):
-                    response += str(message.author.name) + ": You are already subscribed to " + str(foundRole.name)
-                else:
-                    await message.author.add_roles(foundRole)
-                    response += str(message.author.name) + ": You have been subscribed to " + str(foundRole.name)
-            else:
-                response += str(message.author.name) + ": Role " + str(requestedRole) + " was not found."
-
-    if command == '?unsub':
-        splitMsg = message.content.split()
-        foundRole = None
+        foundRole = Nones
         
         if (len(splitMsg) > 1):
             requestedRole = message.content.split(' ', 1)[1]
             for role in message.guild.roles:
-                if (requestedRole.lower() == role.name.lower() and role.permissions.value == 0 and role.mentionable and not role.is_default()):
+                if (requestedRole.lower() == role.name.lower() and role.permissions.value == Permission_Type.No_Permissions.value and role.mentionable and not role.is_default()):
                     foundRole = role
                     break
 
