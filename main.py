@@ -9,7 +9,7 @@ client = discord.Client()
 @client.event
 async def on_message(message):
     response = ""
-    command = message.content.split(' ')[0]
+    command = message.content.split(' ')[0].lower()
     
     # we do not want the bot to reply to itself or other bots
     if message.author.bot:
