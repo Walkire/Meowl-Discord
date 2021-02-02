@@ -22,12 +22,14 @@ async def on_message(message):
     splitMsg = text.split()
     requestedCommand = splitMsg[0].lower()
 
+    #sub
     if requestedCommand == Command_Type.sub.value:
         if (len(splitMsg) == 1):
             await Meowl.displayRoles(user, server.roles, channel)
         if (len(splitMsg) > 1):
             await Meowl.giveRole(user, text, server.roles, channel)
 
+    #unsub
     if requestedCommand == Command_Type.unsub.value:
         await Meowl.removeRole(user, text, server.roles, channel)
 
